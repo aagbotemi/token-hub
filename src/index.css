@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Arima+Madurai&family=Open+Sans&display=swap');
+
+/*
+font-family: 'Arima Madurai', cursive;
+font-family: 'Open Sans', sans-serif;
+*/
+
+*, ::before, ::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+/************
+UTILITY CLASS
+ *************/
+a {
+  text-decoration: none;
+}
