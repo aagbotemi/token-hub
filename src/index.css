@@ -21,3 +21,59 @@ UTILITY CLASS
 a {
   text-decoration: none;
 }
+.d-none {
+  display: none;
+}
+.d-flex {
+  display: flex;
+}
+.d-grid {
+  display: grid;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+.justify-center {
+  justify-content: center;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.items-center {
+  align-items: center;
+}
+.text-center {
+  text-align: center;
+}
+.mt-1 {
+  margin-top: 0.5rem;
+}
+.mt-2 {
+  margin-top: 1.7rem;
+}
+.ml-4 {
+  margin-left: 1rem;
+}
+.ml-2 {
+  margin-left: 8px;
+}
+.vh-100 {
+  min-height: 100vh;
+}
+
+
+
+@media only screen and (min-width: 992px) {
+  .mt-lg-0 {
+    margin-top: 0;
+  }
+  .d-lg-block {
+    display: block;
+  }
+  .d-lg-none {
+    display: none;
+  }
+  .d-lg-flex {
+    display: flex;
+  }
+}
