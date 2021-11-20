@@ -4,17 +4,14 @@
 font-family: 'Arima Madurai', cursive;
 font-family: 'Open Sans', sans-serif;
 */
-
 *, ::before, ::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-
 body {
   font-family: 'Poppins', sans-serif;
 }
-
 /************
 UTILITY CLASS
  *************/
@@ -36,40 +33,17 @@ a {
 .justify-center {
   justify-content: center;
 }
-.justify-between {
-  justify-content: space-between;
-}
 .items-center {
   align-items: center;
 }
-.text-center {
-  text-align: center;
-}
-.mt-1 {
-  margin-top: 0.5rem;
-}
 .mt-2 {
   margin-top: 1.7rem;
-}
-.ml-4 {
-  margin-left: 1rem;
-}
-.ml-2 {
-  margin-left: 8px;
 }
 .vh-100 {
   min-height: 100vh;
 }
 
-
-
 @media only screen and (min-width: 992px) {
-  .mt-lg-0 {
-    margin-top: 0;
-  }
-  .d-lg-block {
-    display: block;
-  }
   .d-lg-none {
     display: none;
   }
