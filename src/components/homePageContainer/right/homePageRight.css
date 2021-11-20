@@ -1,0 +1,26 @@
+main .main-container-right .top-info {
+  font-family: 'Arima Madurai', cursive;
+  font-size: 18px;
+}
+main .main-container-right .main-container-right-content {
+  width: 90%;
+  margin: 0 auto;
+  padding: 2rem 0rem 4rem;
+}
+
+@media only screen and (min-width: 992px) {
+  main .main-container-right {
+    min-height: calc(100vh - 4rem);
+    background: -webkit-linear-gradient(
+    90deg,#0FAFE2,#0970FD,#0970FD,#0FAFE2);
+    color: #FFFFFF;
+  }
+  .main-container-right-sub-content {
+    background: #FFFEFD;
+    color: #41415A;
+    padding: 1.7rem 0.5rem 0rem;
+  }
+  .main-container-right-content {
+    position: relative;
+  }
+}

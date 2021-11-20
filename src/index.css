@@ -1,16 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Arima+Madurai&family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Arima+Madurai&family=Roboto&display=swap');
 
-/*
-font-family: 'Arima Madurai', cursive;
-font-family: 'Open Sans', sans-serif;
-*/
 *, ::before, ::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 /************
 UTILITY CLASS
@@ -36,12 +32,16 @@ a {
 .items-center {
   align-items: center;
 }
+.justify-between {
+  justify-content: space-between;
+}
 .mt-2 {
   margin-top: 1.7rem;
 }
 .vh-100 {
   min-height: 100vh;
 }
+
 
 @media only screen and (min-width: 992px) {
   .d-lg-none {
