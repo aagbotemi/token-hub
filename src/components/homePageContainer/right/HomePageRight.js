@@ -5,6 +5,7 @@ import './homePageRight.css'
 import SendCoin from './components/SendCoin';
 import TransferCoin from './components/TransferCoin';
 import ConfiscateCoin from './components/ConfiscateCoin';
+import MintCoin from './components/MintCoin';
 
 
 import BaseButton from '../../BaseButton'
@@ -19,23 +20,34 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
     const [sendCoinModal, setSendCoinModal] = useState(false);
     const [transferFromModal, setTransferFromModal] = useState(false);
     const [confiscateModal, setConfiscateModal] = useState(false);
+    const [mintModal, setMintModal] = useState(false);
 
     async function openSendCoinModal() {
         setSendCoinModal(true);
         setTransferFromModal(false);
         setConfiscateModal(false);
+        setMintModal(false);
     }
 
     async function openTransferFromModal() {
         setTransferFromModal(true);
         setSendCoinModal(false);
         setConfiscateModal(false);
+        setMintModal(false);
     }
 
     async function openConfiscateModal() {
         setConfiscateModal(true);
         setSendCoinModal(false);
         setTransferFromModal(false);
+        setMintModal(false);
+    }
+
+    async function openMintModal() {
+        setMintModal(true);
+        setSendCoinModal(false);
+        setTransferFromModal(false);
+        setConfiscateModal(false);
     }
 
     async function fetchTokenSymbol() {
@@ -131,6 +143,25 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
         }
     }
 
+    async function mintCoin(e) {
+        e.preventDefault();
+        try {
+            if (typeof window.ethereum !== 'undefined') {
+                await requestWallet()
+                const provider = new ethers.providers.Web3Provider(window.ethereum);
+                const signer = provider.getSigner();
+                const contract = new ethers.Contract(tokenAddress, Token.abi, signer);
+                const transaction = await contract.mint(amount);
+                await transaction.wait();
+                setMintModal(!mintModal)
+                console.log(`${amount} coins has successfully been minted`);
+            }
+        } catch (error) {
+            console.log(error);
+            setMintModal(!mintModal);
+        }
+    }
+
     useEffect(() => {
         fetchTokenSymbol();
         fetchBalanceOfToken();
@@ -180,6 +211,12 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
                         text="Confiscate Token"
                         onClick={openConfiscateModal}
                     />
+
+                    <BaseButton
+                        className={'open-modal-button mt-2 cursor-pointer'}
+                        text="Mint Token"
+                        onClick={openMintModal}
+                    />
                 </div>
 
                 {sendCoinModal && <SendCoin
@@ -204,7 +241,14 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
                     setAmount={setAmount}
                     setConfiscateModal={setConfiscateModal}
                     confiscateModal={confiscateModal}
-                    confiscateCoin={confiscateCoin}                
+                    confiscateCoin={confiscateCoin}              
+                />}
+
+                {mintModal && <MintCoin 
+                    setAmount={setAmount}              
+                    setMintModal={setMintModal}              
+                    mintModal={mintModal}              
+                    mintCoin={mintCoin}              
                 />}
             </div>
         </section>
