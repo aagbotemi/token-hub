@@ -79,6 +79,7 @@ function App() {
             <Route path="/" element={<HomePage 
               currentAccount={currentAccount} 
               tokenAddress={tokenAddress} 
+              requestWallet={requestWallet} 
             />} />
             <Route path="/about" element={<About/>} />
             <Route path="*" element={<NotFound />} />

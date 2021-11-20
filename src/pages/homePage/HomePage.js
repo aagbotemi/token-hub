@@ -3,7 +3,7 @@ import HomePageLeft from '../../components/homePageContainer/left/HomePageLeft';
 import HomePageRight from '../../components/homePageContainer/right/HomePageRight';
 import './homePage.css'
 
-const HomePage = ({ currentAccount, tokenAddress }) => {
+const HomePage = ({ currentAccount, tokenAddress, requestWallet }) => {
     return (
         <main className={'d-grid items-center'}>
             <HomePageLeft 
@@ -12,6 +12,7 @@ const HomePage = ({ currentAccount, tokenAddress }) => {
 
             <HomePageRight 
                 tokenAddress={tokenAddress}
+                requestWallet={requestWallet}
             />
         </main>
     )

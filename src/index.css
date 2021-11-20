@@ -35,6 +35,12 @@ a {
 .justify-between {
   justify-content: space-between;
 }
+.flex-wrap {
+  flex-wrap: wrap;
+}
+.mt-1 {
+  margin-top: 0.7rem;
+}
 .mt-2 {
   margin-top: 1.7rem;
 }
