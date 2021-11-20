@@ -8,6 +8,20 @@ main .main-container-right .main-container-right-content {
   padding: 2rem 0rem 4rem;
 }
 
+
+.main-container-right .top-info {
+    padding-bottom: 0.4rem
+}
+
+.main-container-right .top-info .tnx-history-btn {
+  padding: 7px 10px;
+  border: 0;
+  border-radius: 5px;
+  background: #0FAFE2;
+  color: #FFFFFF;
+}
+
+
 @media only screen and (min-width: 992px) {
   main .main-container-right {
     min-height: calc(100vh - 4rem);
