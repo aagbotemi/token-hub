@@ -33,6 +33,7 @@ MODAL BTN & FORMS
   -webkit-backdrop-filter: blur(10px);
   border-radius: 8px;
   color: #41415A;
+  display: block;
 }
 
 .open-modal-button:hover {

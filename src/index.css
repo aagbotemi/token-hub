@@ -38,6 +38,17 @@ a {
 .flex-wrap {
   flex-wrap: wrap;
 }
+/*
+.text-center {
+  text-align: center;
+}
+.ml-4 {
+  margin-left: 1rem;
+}
+.ml-2 {
+  margin-left: 8px;
+}
+*/
 .mt-1 {
   margin-top: 0.7rem;
 }
@@ -47,9 +58,19 @@ a {
 .vh-100 {
   min-height: 100vh;
 }
+.d-block {
+  display: block;
+}
 
 
 @media only screen and (min-width: 992px) {
+  /*.mt-lg-0 {
+    margin-top: 0;
+  }
+  .d-lg-block {
+    display: block;
+  }
+  */
   .d-lg-none {
     display: none;
   }
