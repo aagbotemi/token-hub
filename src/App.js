@@ -3,6 +3,7 @@ import { ethers } from 'ethers';
 import { Routes, Route, Link } from "react-router-dom";
 import Token from './artifacts/contracts/Token.sol/Token.json';
 import ConnectWallet from './pages/connectWallet/ConnectWallet'
+import Header from './components/header/Header'
 import HomePage from './pages/homePage/HomePage'
 import About from './pages/about/About'
 import NotFound from './pages/404/404'
@@ -72,11 +73,14 @@ function App() {
           requestWallet={requestWallet} 
         />
       ) : (
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<About/>} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <>
+          <Header />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<About/>} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </>
       )}
     </>
   );
