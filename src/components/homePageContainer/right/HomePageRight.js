@@ -4,6 +4,7 @@ import Token from '../../../artifacts/contracts/Token.sol/Token.json';
 import './homePageRight.css'
 import SendCoin from './components/SendCoin';
 import TransferCoin from './components/TransferCoin';
+import ConfiscateCoin from './components/ConfiscateCoin';
 
 
 import BaseButton from '../../BaseButton'
@@ -17,15 +18,24 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
 
     const [sendCoinModal, setSendCoinModal] = useState(false);
     const [transferFromModal, setTransferFromModal] = useState(false);
+    const [confiscateModal, setConfiscateModal] = useState(false);
 
     async function openSendCoinModal() {
         setSendCoinModal(true);
         setTransferFromModal(false);
+        setConfiscateModal(false);
     }
 
     async function openTransferFromModal() {
         setTransferFromModal(true);
         setSendCoinModal(false);
+        setConfiscateModal(false);
+    }
+
+    async function openConfiscateModal() {
+        setConfiscateModal(true);
+        setSendCoinModal(false);
+        setTransferFromModal(false);
     }
 
     async function fetchTokenSymbol() {
@@ -61,16 +71,12 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
         try {
             console.log("start-1");
             if (typeof window.ethereum !== 'undefined') {
-                console.log("start-2");
                 await requestWallet()
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                 const signer = provider.getSigner();
                 const contract = new ethers.Contract(tokenAddress, Token.abi, signer);
-                console.log("working");
                 const transaction = await contract.transfer(receiverAccount, amount);
-                console.log("working-2");
                 await transaction.wait();
-                console.log("working-3");
 
                 const receiver = `${receiverAccount.substring(0, 6).concat('...')}${receiverAccount.slice(0, 4)}`;
                 setSendCoinModal(!sendCoinModal);
@@ -86,20 +92,42 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
         e.preventDefault();
         try {
             if (typeof window.ethereum !== 'undefined') {
-            await requestWallet()
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
-            const signer = provider.getSigner();
-            const contract = new ethers.Contract(tokenAddress, Token.abi, signer);
-            const transaction = await contract.transferFrom(ownerAccount, receiverAccount, amount);
-            await transaction.wait();
-            
-            const owner = `${ownerAccount.substring(0, 6).concat('...')}${ownerAccount.slice(0, 4)}`;
-            const receiverFrom = `${receiverAccount.substring(0, 6).concat('...')}${receiverAccount.slice(0, 4)}`;
-            setTransferFromModal(!transferFromModal);
-            console.log(`${amount} coins successfully transferred from ${owner} to ${receiverFrom}`);
-        }
+                await requestWallet()
+                const provider = new ethers.providers.Web3Provider(window.ethereum);
+                const signer = provider.getSigner();
+                const contract = new ethers.Contract(tokenAddress, Token.abi, signer);
+                const transaction = await contract.transferFrom(ownerAccount, receiverAccount, amount);
+                await transaction.wait();
+                
+                const owner = `${ownerAccount.substring(0, 6).concat('...')}${ownerAccount.slice(0, 4)}`;
+                const receiverFrom = `${receiverAccount.substring(0, 6).concat('...')}${receiverAccount.slice(0, 4)}`;
+                setTransferFromModal(!transferFromModal);
+                console.log(`${amount} coins successfully transferred from ${owner} to ${receiverFrom}`);
+            }
         } catch (error) {
             console.log(error)
+            setTransferFromModal(!transferFromModal);
+        }
+    }
+
+    async function confiscateCoin(e) {
+        e.preventDefault();
+        try {
+            if (typeof window.ethereum !== 'undefined') {
+                await requestWallet()
+                const provider = new ethers.providers.Web3Provider(window.ethereum);
+                const signer = provider.getSigner();
+                const contract = new ethers.Contract(tokenAddress, Token.abi, signer);
+                const transaction = await contract.confiscate(ownerAccount, amount);
+                await transaction.wait();
+
+                setConfiscateModal(!confiscateModal);
+                const owner = `${ownerAccount.substring(0, 6).concat('...')}${ownerAccount.slice(0, 4)}`;
+                console.log(`${amount} coins has successfully been confiscated from ${owner}`);
+            }
+        } catch (error) {
+            console.log('error', error)
+            setConfiscateModal(!confiscateModal);
         }
     }
 
@@ -140,12 +168,18 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
                         text="Send Coins"
                         onClick={openSendCoinModal}
                     />
+
                     <BaseButton
                         className={'open-modal-button mt-2 cursor-pointer'}
                         text="Transfer Between Users"
                         onClick={openTransferFromModal}
                     />
 
+                    <BaseButton
+                        className={'open-modal-button mt-2 cursor-pointer'}
+                        text="Confiscate Token"
+                        onClick={openConfiscateModal}
+                    />
                 </div>
 
                 {sendCoinModal && <SendCoin
@@ -155,7 +189,6 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
                     sendCoinModal={sendCoinModal}
                     sendCoins={sendCoins}
                 />}
-
                 
                 {transferFromModal && <TransferCoin
                     setOwnerAccount={setOwnerAccount}
@@ -164,6 +197,14 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
                     setTransferFromModal={setTransferFromModal}
                     transferFromModal={transferFromModal}
                     transferCoinFrom={transferCoinFrom}
+                />}
+
+                {confiscateModal && <ConfiscateCoin 
+                    setOwnerAccount={setOwnerAccount}
+                    setAmount={setAmount}
+                    setConfiscateModal={setConfiscateModal}
+                    confiscateModal={confiscateModal}
+                    confiscateCoin={confiscateCoin}                
                 />}
             </div>
         </section>
