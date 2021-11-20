@@ -8,7 +8,8 @@ import HomePage from './pages/homePage/HomePage'
 import About from './pages/about/About'
 import NotFound from './pages/404/404'
 
-const tokenAddress = "0x437c9558aC57D07BDa7050cf03379DfeA150C7aE";
+// const tokenAddress = "0x437c9558aC57D07BDa7050cf03379DfeA150C7aE";
+const tokenAddress = "0xE6aC6F8179dFc95939BFD35AC6b945F678331E79";
 
 function App() {
   const [currentAccount, setCurrentAccount] = useState("");

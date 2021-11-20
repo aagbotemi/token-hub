@@ -100,6 +100,41 @@ MODAL BTN & FORMS
 }
 
 
+main .transaction-container .transaction-list {
+  background-color: #EEEFFF;
+  padding: 15px;
+  width: 96%;
+  margin: 8px auto 0;
+  border-radius: 8px;
+}
+main .transaction-container .transaction-list:hover {
+  width: 100%;
+}
+main .transaction-container .no-transaction-list {
+  padding: 20px 0px;
+  font-size: 20px;
+}
+
+.address {
+  font-size: 14px;
+  color: #6b7c93;
+  word-break: break-word;
+}
+
+.transaction {
+  font-size: 18px;
+  color: #41415A;
+  font-weight: 400;
+  word-break: break-word;
+}
+
+.date-time {
+  font-size: 12px;
+  word-break: break-word;
+  text-align: right;
+}
+
+
 @media only screen and (max-width: 540px) {
   .modal {
     width: calc(100% - 10%);

@@ -6,6 +6,7 @@ import SendCoin from './components/SendCoin';
 import TransferCoin from './components/TransferCoin';
 import ConfiscateCoin from './components/ConfiscateCoin';
 import MintCoin from './components/MintCoin';
+import TransactionHistory from './components/TransactionHistory';
 
 
 import BaseButton from '../../BaseButton'
@@ -17,16 +18,20 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
     const [ownerAccount, setOwnerAccount] = useState('');
     const [amount, setAmount] = useState(0);
 
+    const [allTransactions, setAllTransactions] = useState([]);
+
     const [sendCoinModal, setSendCoinModal] = useState(false);
     const [transferFromModal, setTransferFromModal] = useState(false);
     const [confiscateModal, setConfiscateModal] = useState(false);
     const [mintModal, setMintModal] = useState(false);
+    const [txnHistoryModal, setTnxHistoryModal] = useState(false);
 
     async function openSendCoinModal() {
         setSendCoinModal(true);
         setTransferFromModal(false);
         setConfiscateModal(false);
         setMintModal(false);
+        setTnxHistoryModal(false);
     }
 
     async function openTransferFromModal() {
@@ -34,6 +39,7 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
         setSendCoinModal(false);
         setConfiscateModal(false);
         setMintModal(false);
+        setTnxHistoryModal(false);
     }
 
     async function openConfiscateModal() {
@@ -41,6 +47,7 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
         setSendCoinModal(false);
         setTransferFromModal(false);
         setMintModal(false);
+        setTnxHistoryModal(false);
     }
 
     async function openMintModal() {
@@ -48,6 +55,15 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
         setSendCoinModal(false);
         setTransferFromModal(false);
         setConfiscateModal(false);
+        setTnxHistoryModal(false);
+    }
+
+    async function openTnxHistoryModal() {
+        setTnxHistoryModal(true);
+        setSendCoinModal(false);
+        setTransferFromModal(false);
+        setConfiscateModal(false);
+        setMintModal(false);
     }
 
     async function fetchTokenSymbol() {
@@ -79,9 +95,7 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
 
     async function sendCoins(e) {
         e.preventDefault();
-        console.log("start");
         try {
-            console.log("start-1");
             if (typeof window.ethereum !== 'undefined') {
                 await requestWallet()
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -89,6 +103,9 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
                 const contract = new ethers.Contract(tokenAddress, Token.abi, signer);
                 const transaction = await contract.transfer(receiverAccount, amount);
                 await transaction.wait();
+
+                
+                getAllTransactions();
 
                 const receiver = `${receiverAccount.substring(0, 6).concat('...')}${receiverAccount.slice(0, 4)}`;
                 setSendCoinModal(!sendCoinModal);
@@ -162,9 +179,36 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
         }
     }
 
+    const getAllTransactions = async () => {
+        const { ethereum } = window;
+        try {
+            if (ethereum) {
+                const provider = new ethers.providers.Web3Provider(ethereum);
+                const signer = provider.getSigner();
+                const contract = new ethers.Contract(tokenAddress, Token.abi, signer);
+
+                const transactions = await contract.getAllTransactions();
+
+                const transactionsCleaned = transactions.map(transaction => {
+                    return {
+                        address: transaction.to,
+                        timestamp: new Date(transaction.timestamp * 1000),
+                        value: transaction.value,
+                    };
+                });
+                setAllTransactions(transactionsCleaned);
+            } else {
+                console.log("Ethereum object doesn't exist!")
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     useEffect(() => {
         fetchTokenSymbol();
         fetchBalanceOfToken();
+        getAllTransactions();
     }, [])
   
     return (
@@ -174,11 +218,11 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
                 <div>
                     Total Value: {balanceOf / (10 ** 18)}
                 </div>
-                <button
-                    className={'tnx-history-btn cursor-pointer'}/*
-                    onClick={openTnxHistoryModal}*/>
-                    Transaction History
-                </button>
+                <BaseButton
+                    className={'tnx-history-btn cursor-pointer'}
+                    text="Transaction History"
+                    onClick={openTnxHistoryModal}
+                />
             </div>
             <div className={'main-container-right-content'}>
                 <div className={'top-info d-flex d-lg-none justify-between items-center main-container-right-sub-content flex-wrap'}>
@@ -186,11 +230,11 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
                     <div>
                       Total Value: {balanceOf / (10 ** 18)}
                     </div>
-                    <button
+                    <BaseButton
                         className={'tnx-history-btn cursor-pointer'}
-                        /*onClick={openTnxHistoryModal}*/>
-                        Transaction History
-                    </button>
+                        text="Transaction History"
+                        onClick={openTnxHistoryModal}
+                    />
                 </div>
 
                 <div className={'mt-2 mt-lg-0'}>
@@ -248,7 +292,13 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
                     setAmount={setAmount}              
                     setMintModal={setMintModal}              
                     mintModal={mintModal}              
-                    mintCoin={mintCoin}              
+                    mintCoin={mintCoin}             
+                />}
+
+                {txnHistoryModal && <TransactionHistory
+                    allTransactions={allTransactions}
+                    setTnxHistoryModal={setTnxHistoryModal}
+                    txnHistoryModal={txnHistoryModal}
                 />}
             </div>
         </section>
