@@ -8,16 +8,17 @@ const Header = () => {
               <div className={'navbar-container d-flex justify-between items-center'}>
                 <div className="navbar-brand">
                     <Link to={'/'}>
-                        AAToken<span style={{fontSize: '18px'}}>✨</span>
+                        <span>AAToken</span>✨
                     </Link>
-
                 </div>
                 <div className={'d-flex items-center'}>
-                  <div style={{fontSize: '20px'}}
-                       className={'cursor-pointer'}
-                  >
-                      <Link to={'/about'}>About</Link>
-                  </div>
+                    <div style={{fontSize: '20px'}}
+                        className={'about cursor-pointer'}
+                    >
+                        <Link to={'/about'}>
+                            About
+                        </Link>
+                    </div>
                   {/*<p className={'ml-2'}>Dark</p>*/}
                 </div>
             </div>
