@@ -8,7 +8,6 @@ main .main-container-right .main-container-right-content {
   padding: 2rem 0rem 4rem;
 }
 
-
 .main-container-right .top-info {
     padding-bottom: 0.4rem
 }
@@ -20,7 +19,6 @@ main .main-container-right .main-container-right-content {
   background: #0FAFE2;
   color: #FFFFFF;
 }
-
 
 @media only screen and (min-width: 992px) {
   main .main-container-right {
