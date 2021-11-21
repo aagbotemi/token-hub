@@ -13,7 +13,7 @@ const tokenAddress = "0xE6aC6F8179dFc95939BFD35AC6b945F678331E79";
 
 function App() {
   const [currentAccount, setCurrentAccount] = useState("");
-  const [loadingWallet, setLoadingWallet] = useState("");
+  const [loadingWallet, setLoadingWallet] = useState(false);
 
   const checkIfWalletIsConnected = async () => {
     try {
