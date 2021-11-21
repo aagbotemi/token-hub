@@ -8,7 +8,7 @@ const Header = () => {
               <div className={'navbar-container d-flex justify-between items-center'}>
                 <div className="navbar-brand">
                     <Link to={'/'}>
-                        <span>AAToken</span>✨
+                        <span>TokenHub</span>✨
                     </Link>
                 </div>
                 <div className={'d-flex items-center'}>

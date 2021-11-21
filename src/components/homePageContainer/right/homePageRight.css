@@ -46,7 +46,7 @@ MODAL BTN & FORMS
   /* For the modal */
   position: fixed;
   left: 50%;
-  top: 24%;
+  top: 12%;
   transform: translate(-50%, 0%);
   background: #FFFFFF;
   width: calc(100% - 40%);
@@ -92,13 +92,17 @@ MODAL BTN & FORMS
 }
 
 .modal form .modal-form-footer button:first-child {
-  background: rgba(245, 29, 61, 0.92);
+  background: rgba(255, 42, 95, 0.932);
 }
 
 .modal form .modal-form-footer button:nth-child(2) {
   background: #0FAFE2;
 }
 
+
+main .transaction-container {
+  overflow-y: scroll;
+}
 
 main .transaction-container .transaction-list {
   background-color: #EEEFFF;
