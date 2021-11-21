@@ -1,12 +1,14 @@
 import React from 'react'
 import BaseButton from '../../../BaseButton'
+import { Spinner } from '../../../../components/spinner/Spinner'
 
 const SendCoin = ({
     setReceiverAccount,
     setAmount,
     setSendCoinModal,
     sendCoinModal,
-    sendCoins
+    sendCoins,
+    isLoading
 }) => {
     return (
         <div className={'modal'}>
@@ -36,10 +38,16 @@ const SendCoin = ({
                             text="Cancel"
                             onClick={() => setSendCoinModal(!sendCoinModal)}
                         />
-                        <BaseButton
-                            text="Send"
-                            onClick={sendCoins}
-                        />
+                        {
+                            isLoading
+                                ? <BaseButton
+                                    text={<Spinner />}
+                                />
+                                : <BaseButton
+                                    text="Send"
+                                    onClick={sendCoins}
+                                />
+                        }
                     </div>
                 </form>
             </div>

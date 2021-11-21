@@ -1,11 +1,13 @@
 import React from 'react'
 import BaseButton from '../../../BaseButton'
+import { Spinner } from '../../../../components/spinner/Spinner'
 
 const MintCoin = ({
     setAmount,
     setMintModal,
     mintModal,
-    mintCoin
+    mintCoin,
+    isLoading
 }) => {
     return (
         <div className={'modal'}>
@@ -29,10 +31,16 @@ const MintCoin = ({
                             text="Cancel"
                             onClick={() => setMintModal(!mintModal)}
                         />
-                        <BaseButton
-                            text="Mint"
-                            onClick={mintCoin}
-                        />
+                        {
+                            isLoading
+                                ? <BaseButton
+                                    text={<Spinner />}
+                                />
+                                : <BaseButton
+                                    text="Send"
+                                    onClick={mintCoin}
+                                />
+                        }
                     </div>
                 </form>
             </div>

@@ -17,8 +17,11 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
     const [receiverAccount, setReceiverAccount] = useState('');
     const [ownerAccount, setOwnerAccount] = useState('');
     const [amount, setAmount] = useState(0);
-
     const [allTransactions, setAllTransactions] = useState([]);
+    const [isLoadingSendCoin, setIsLoadingSendCoin] = useState(false);
+    const [isLoadingTransferCoin, setIsLoadingTransferCoin] = useState(false);
+    const [isLoadingConfiscateCoin, setIsLoadingConfiscateCoin] = useState(false);
+    const [isLoadingMintCoin, setIsLoadingMintCoin] = useState(false);
 
     const [sendCoinModal, setSendCoinModal] = useState(false);
     const [transferFromModal, setTransferFromModal] = useState(false);
@@ -95,6 +98,7 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
 
     async function sendCoins(e) {
         e.preventDefault();
+        setIsLoadingSendCoin(true);
         try {
             if (typeof window.ethereum !== 'undefined') {
                 await requestWallet()
@@ -103,9 +107,9 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
                 const contract = new ethers.Contract(tokenAddress, Token.abi, signer);
                 const transaction = await contract.transfer(receiverAccount, amount);
                 await transaction.wait();
-
-                
                 getAllTransactions();
+                
+                setIsLoadingSendCoin(false);
 
                 const receiver = `${receiverAccount.substring(0, 6).concat('...')}${receiverAccount.slice(0, 4)}`;
                 setSendCoinModal(!sendCoinModal);
@@ -113,12 +117,14 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
             }
         } catch (error) {
             console.log(error)
+            setIsLoadingSendCoin(false);
             setSendCoinModal(!sendCoinModal)
         }
     }
 
     async function transferCoinFrom(e) {
         e.preventDefault();
+        setIsLoadingTransferCoin(true);
         try {
             if (typeof window.ethereum !== 'undefined') {
                 await requestWallet()
@@ -128,6 +134,8 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
                 const transaction = await contract.transferFrom(ownerAccount, receiverAccount, amount);
                 await transaction.wait();
                 
+                setIsLoadingTransferCoin(false);
+                
                 const owner = `${ownerAccount.substring(0, 6).concat('...')}${ownerAccount.slice(0, 4)}`;
                 const receiverFrom = `${receiverAccount.substring(0, 6).concat('...')}${receiverAccount.slice(0, 4)}`;
                 setTransferFromModal(!transferFromModal);
@@ -135,12 +143,14 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
             }
         } catch (error) {
             console.log(error)
+            setIsLoadingTransferCoin(false);
             setTransferFromModal(!transferFromModal);
         }
     }
 
     async function confiscateCoin(e) {
         e.preventDefault();
+        setIsLoadingConfiscateCoin(true);
         try {
             if (typeof window.ethereum !== 'undefined') {
                 await requestWallet()
@@ -150,18 +160,22 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
                 const transaction = await contract.confiscate(ownerAccount, amount);
                 await transaction.wait();
 
+                setIsLoadingConfiscateCoin(false);
+
                 setConfiscateModal(!confiscateModal);
                 const owner = `${ownerAccount.substring(0, 6).concat('...')}${ownerAccount.slice(0, 4)}`;
                 console.log(`${amount} coins has successfully been confiscated from ${owner}`);
             }
         } catch (error) {
-            console.log('error', error)
+            console.log('error', error);
+            setIsLoadingConfiscateCoin(false);
             setConfiscateModal(!confiscateModal);
         }
     }
 
     async function mintCoin(e) {
         e.preventDefault();
+        setIsLoadingMintCoin(true);
         try {
             if (typeof window.ethereum !== 'undefined') {
                 await requestWallet()
@@ -170,11 +184,14 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
                 const contract = new ethers.Contract(tokenAddress, Token.abi, signer);
                 const transaction = await contract.mint(amount);
                 await transaction.wait();
+                
+                setIsLoadingMintCoin(false);
                 setMintModal(!mintModal)
                 console.log(`${amount} coins has successfully been minted`);
             }
         } catch (error) {
             console.log(error);
+            setIsLoadingMintCoin(false);
             setMintModal(!mintModal);
         }
     }
@@ -210,7 +227,7 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
         fetchBalanceOfToken();
         getAllTransactions();
     }, [])
-  
+
     return (
         <section className={'main-container-right'}>
             <div className={'top-info d-none d-lg-flex justify-between items-center main-container-right-sub-content'}>
@@ -269,6 +286,7 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
                     setSendCoinModal={setSendCoinModal}
                     sendCoinModal={sendCoinModal}
                     sendCoins={sendCoins}
+                    isLoading={isLoadingSendCoin}
                 />}
                 
                 {transferFromModal && <TransferCoin
@@ -278,21 +296,24 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
                     setTransferFromModal={setTransferFromModal}
                     transferFromModal={transferFromModal}
                     transferCoinFrom={transferCoinFrom}
+                    isLoading={isLoadingTransferCoin}
                 />}
 
-                {confiscateModal && <ConfiscateCoin 
+                {confiscateModal && <ConfiscateCoin
                     setOwnerAccount={setOwnerAccount}
                     setAmount={setAmount}
                     setConfiscateModal={setConfiscateModal}
                     confiscateModal={confiscateModal}
-                    confiscateCoin={confiscateCoin}              
+                    confiscateCoin={confiscateCoin}
+                    isLoading={isLoadingConfiscateCoin}
                 />}
 
                 {mintModal && <MintCoin 
-                    setAmount={setAmount}              
-                    setMintModal={setMintModal}              
-                    mintModal={mintModal}              
-                    mintCoin={mintCoin}             
+                    setAmount={setAmount}
+                    setMintModal={setMintModal}
+                    mintModal={mintModal}
+                    mintCoin={mintCoin}
+                    isLoading={isLoadingMintCoin}
                 />}
 
                 {txnHistoryModal && <TransactionHistory

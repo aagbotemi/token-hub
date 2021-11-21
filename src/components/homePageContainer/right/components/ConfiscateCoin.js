@@ -1,12 +1,14 @@
 import React from 'react'
 import BaseButton from '../../../BaseButton'
+import { Spinner } from '../../../../components/spinner/Spinner'
 
 const ConfiscateCoin = ({
     setOwnerAccount,
     setAmount,
     setConfiscateModal,
     confiscateModal,
-    confiscateCoin  
+    confiscateCoin,
+    isLoading
 }) => {
     return (
         <div className={'modal'}>
@@ -36,10 +38,16 @@ const ConfiscateCoin = ({
                             text="Cancel"
                             onClick={() => setConfiscateModal(!confiscateModal)}
                         />
-                        <BaseButton
-                            text="Confiscate"
-                            onClick={confiscateCoin}
-                        />
+                        {
+                            isLoading
+                                ? <BaseButton
+                                    text={<Spinner />}
+                                />
+                                : <BaseButton
+                                    text="Confiscate"
+                                    onClick={confiscateCoin}
+                                />
+                        }
                     </div>
                 </form>
             </div>
