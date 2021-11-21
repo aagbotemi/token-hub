@@ -16,7 +16,7 @@ const Header = () => {
                         className={'about cursor-pointer'}
                     >
                         <Link to={'/about'}>
-                            About
+                            💡
                         </Link>
                     </div>
                   {/*<p className={'ml-2'}>Dark</p>*/}

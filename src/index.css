@@ -42,6 +42,9 @@ a {
 .mt-1 {
   margin-top: 0.7rem;
 }
+.mx-1 {
+  margin: 0rem 1rem;
+}
 .mt-2 {
   margin-top: 1.7rem;
 }
