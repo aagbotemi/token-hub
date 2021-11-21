@@ -13,10 +13,12 @@ const Header = () => {
                 </div>
                 <div className={'d-flex items-center'}>
                     <div style={{fontSize: '20px'}}
-                        className={'about cursor-pointer'}
+                        className={'cursor-pointer'}
                     >
                         <Link to={'/about'}>
                             💡
+                            {/* <span role="img" aria-label="idea-emoji">💡</span>
+                            About */}
                         </Link>
                     </div>
                   {/*<p className={'ml-2'}>Dark</p>*/}

@@ -15,8 +15,7 @@ nav {
 .navbar-brand {
   font-size: 25px;
 }
-.navbar-brand span,
-.about a {
+.navbar-brand span {
     color: #222;
 }
 .navbar-brand span {
