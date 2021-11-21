@@ -18,6 +18,11 @@ function App() {
   const [currentAccount, setCurrentAccount] = useState("");
   const [loadingWallet, setLoadingWallet] = useState(false);
 
+  toast.configure({
+    autoClose: 7000,
+    draggable: true,
+  });
+
   const checkIfWalletIsConnected = async () => {
     try {
       const { ethereum } = window;

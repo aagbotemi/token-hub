@@ -2,13 +2,8 @@ import React from 'react'
 import { Spinner } from '../../components/spinner/Spinner'
 
 import './connectWallet.css'
-import { toast } from 'react-toastify';
 
 const ConnectWallet = ({ requestWallet, loadingWallet }) => {
-  toast.configure({
-    autoClose: 7000,
-    draggable: true,
-  });
   
   return (
     <section className={"connect-wallet d-flex"}>

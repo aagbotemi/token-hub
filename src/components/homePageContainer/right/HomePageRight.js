@@ -7,9 +7,9 @@ import TransferCoin from './components/TransferCoin';
 import ConfiscateCoin from './components/ConfiscateCoin';
 import MintCoin from './components/MintCoin';
 import TransactionHistory from './components/TransactionHistory';
-
-
 import BaseButton from '../../BaseButton'
+
+import { toast } from 'react-toastify';
 
 const HomePageRight = ({ tokenAddress, requestWallet }) => {
     const [symbol, setSymbol] = useState("");
@@ -28,6 +28,11 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
     const [confiscateModal, setConfiscateModal] = useState(false);
     const [mintModal, setMintModal] = useState(false);
     const [txnHistoryModal, setTnxHistoryModal] = useState(false);
+
+    toast.configure({
+        autoClose: 7000,
+        draggable: true,
+    });
 
     async function openSendCoinModal() {
         setSendCoinModal(true);
@@ -101,7 +106,7 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
         setIsLoadingSendCoin(true);
         try {
             if (typeof window.ethereum !== 'undefined') {
-                await requestWallet()
+                // await requestWallet()
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                 const signer = provider.getSigner();
                 const contract = new ethers.Contract(tokenAddress, Token.abi, signer);
@@ -113,12 +118,26 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
 
                 const receiver = `${receiverAccount.substring(0, 6).concat('...')}${receiverAccount.slice(0, 4)}`;
                 setSendCoinModal(!sendCoinModal);
-                console.log(`${amount} Coins successfully sent to ${receiver}`);
+                // console.log(`${amount} Coins successfully sent to ${receiver}`);
+
+                toast.dismiss();
+                toast.success(`${amount} coins successfully sent to ${receiver}`, {
+                    position: "top-right",
+                    pauseOnHover: true,
+                    draggable: false,
+                });
             }
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             setIsLoadingSendCoin(false);
             setSendCoinModal(!sendCoinModal)
+
+            toast.dismiss();
+            toast.error(error.message, {
+                position: "top-right",
+                pauseOnHover: true,
+                draggable: false,
+            });
         }
     }
 
@@ -127,7 +146,7 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
         setIsLoadingTransferCoin(true);
         try {
             if (typeof window.ethereum !== 'undefined') {
-                await requestWallet()
+                // await requestWallet()
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                 const signer = provider.getSigner();
                 const contract = new ethers.Contract(tokenAddress, Token.abi, signer);
@@ -139,12 +158,24 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
                 const owner = `${ownerAccount.substring(0, 6).concat('...')}${ownerAccount.slice(0, 4)}`;
                 const receiverFrom = `${receiverAccount.substring(0, 6).concat('...')}${receiverAccount.slice(0, 4)}`;
                 setTransferFromModal(!transferFromModal);
-                console.log(`${amount} coins successfully transferred from ${owner} to ${receiverFrom}`);
+                // console.log(`${amount} coins successfully transferred from ${owner} to ${receiverFrom}`);
+                toast.dismiss();
+                toast.success(`${amount} coins successfully transferred from ${owner} to ${receiverFrom}`, {
+                    position: "top-right",
+                    pauseOnHover: true,
+                    draggable: false,
+                });
             }
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             setIsLoadingTransferCoin(false);
             setTransferFromModal(!transferFromModal);
+            toast.dismiss();
+            toast.error(error.message, {
+                position: "top-right",
+                pauseOnHover: true,
+                draggable: false,
+            });
         }
     }
 
@@ -153,7 +184,7 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
         setIsLoadingConfiscateCoin(true);
         try {
             if (typeof window.ethereum !== 'undefined') {
-                await requestWallet()
+                // await requestWallet()
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                 const signer = provider.getSigner();
                 const contract = new ethers.Contract(tokenAddress, Token.abi, signer);
@@ -164,12 +195,24 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
 
                 setConfiscateModal(!confiscateModal);
                 const owner = `${ownerAccount.substring(0, 6).concat('...')}${ownerAccount.slice(0, 4)}`;
-                console.log(`${amount} coins has successfully been confiscated from ${owner}`);
+                // console.log(`${amount} coins has successfully been confiscated from ${owner}`);
+                toast.dismiss();
+                toast.success(`${amount} coins has successfully been confiscated from ${owner}`, {
+                    position: "top-right",
+                    pauseOnHover: true,
+                    draggable: false,
+                });
             }
         } catch (error) {
-            console.log('error', error);
+            // console.log('error', error);
             setIsLoadingConfiscateCoin(false);
             setConfiscateModal(!confiscateModal);
+            toast.dismiss();
+            toast.error(error.message, {
+                position: "top-right",
+                pauseOnHover: true,
+                draggable: false,
+            });
         }
     }
 
@@ -178,7 +221,7 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
         setIsLoadingMintCoin(true);
         try {
             if (typeof window.ethereum !== 'undefined') {
-                await requestWallet()
+                // await requestWallet()
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                 const signer = provider.getSigner();
                 const contract = new ethers.Contract(tokenAddress, Token.abi, signer);
@@ -187,12 +230,24 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
                 
                 setIsLoadingMintCoin(false);
                 setMintModal(!mintModal)
-                console.log(`${amount} coins has successfully been minted`);
+                // console.log(`${amount} coins has successfully been minted`);
+                toast.dismiss();
+                toast.error(`${amount} coins has successfully been minted`, {
+                    position: "top-right",
+                    pauseOnHover: true,
+                    draggable: false,
+                });
             }
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             setIsLoadingMintCoin(false);
             setMintModal(!mintModal);
+            toast.dismiss();
+            toast.error(error.message, {
+                position: "top-right",
+                pauseOnHover: true,
+                draggable: false,
+            });
         }
     }
 
@@ -218,7 +273,13 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
                 console.log("Ethereum object doesn't exist!")
             }
         } catch (error) {
-            console.log(error);
+            // console.log(error);
+            toast.dismiss();
+            toast.error(error.message, {
+                position: "top-right",
+                pauseOnHover: true,
+                draggable: false,
+            });
         }
     }
 
