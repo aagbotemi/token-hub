@@ -1,9 +1,8 @@
 import {useEffect, useState} from "react";
-import { ethers } from 'ethers';
-import { Routes, Route, Link } from "react-router-dom";
-import Token from './artifacts/contracts/Token.sol/Token.json';
+import { Routes, Route } from "react-router-dom";
 import ConnectWallet from './pages/connectWallet/ConnectWallet'
-import Header from './components/header/Header'
+import Header from './components/header/Header';
+import Footer from './components/footer/Footer';
 import HomePage from './pages/homePage/HomePage'
 import About from './pages/about/About'
 import NotFound from './pages/404/404'
@@ -125,7 +124,8 @@ function App() {
             />} />
             <Route path="/about" element={<About/>} />
             <Route path="*" element={<NotFound />} />
-          </Routes>
+            </Routes>
+            <Footer />
         </>
       )}
     </>

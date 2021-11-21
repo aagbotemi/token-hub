@@ -7,6 +7,7 @@
 }
 body {
   font-family: 'Roboto', sans-serif;
+  color: #222;
 }
 /************
 UTILITY CLASS
@@ -52,6 +53,9 @@ a {
 }
 .py- {
   padding: 120px 0rem;
+}
+.text-center {
+  text-align: center;
 }
 
 @media only screen and (min-width: 992px) {
