@@ -8,8 +8,11 @@ import HomePage from './pages/homePage/HomePage'
 import About from './pages/about/About'
 import NotFound from './pages/404/404'
 
+import { toast } from 'react-toastify';
+
 // const tokenAddress = "0x437c9558aC57D07BDa7050cf03379DfeA150C7aE";
 const tokenAddress = "0xE6aC6F8179dFc95939BFD35AC6b945F678331E79";
+
 
 function App() {
   const [currentAccount, setCurrentAccount] = useState("");
@@ -20,7 +23,13 @@ function App() {
       const { ethereum } = window;
 
       if (!ethereum) {
-        console.log("Make sure you have metamask!");
+        // console.log("Make sure you have metamask!");
+        toast.dismiss();
+        toast.info("Make sure you have MetaMask!", {
+          position: "top-right",
+          pauseOnHover: true,
+          draggable: false,
+        });
         return;
       } else {
         console.log("We have the ethereum object", ethereum);
@@ -36,7 +45,14 @@ function App() {
         console.log("No authorized account found")
       }
     } catch (error) {
+      // console.log(error);
       console.log(error);
+      toast.dismiss();
+      toast.success(error.message, {
+        position: "top-right",
+        pauseOnHover: true,
+        draggable: false,
+      });
     }
   }
 
@@ -46,7 +62,13 @@ function App() {
       const { ethereum } = window;
 
       if (!ethereum) {
-        console.log("Get MetaMask!");
+        // console.log("Get MetaMask!");
+        toast.dismiss();
+        toast.info("Get MetaMask!", {
+          position: "top-right",
+          pauseOnHover: true,
+          draggable: false,
+        });
         return;
       }
 
@@ -56,9 +78,23 @@ function App() {
 
       setCurrentAccount(accounts[0]);
       setLoadingWallet(false);
+
+      toast.dismiss();
+      toast.success("You're connected successfully", {
+        position: "top-right",
+        pauseOnHover: true,
+        draggable: false,
+      });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       setLoadingWallet(false);
+
+      toast.dismiss();
+      toast.error(error.message, {
+        position: "top-right",
+        pauseOnHover: true,
+        draggable: false,
+      });
     }
   }
 
