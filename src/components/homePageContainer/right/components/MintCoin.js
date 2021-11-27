@@ -13,7 +13,7 @@ const MintCoin = ({
         <div className={'modal'}>
             <div>
                 <h3 style={{ color: '#41415a'}}>
-                    Mint new <span>AAToken</span>
+                    Mint new <span>AAToken</span> <br /> <span style={{fontSize: '12px'}}>Kindly append  18 0's to the amount you want to mint, we are using 18 decimals.</span>
                 </h3>
 
                 <form>
@@ -22,6 +22,8 @@ const MintCoin = ({
                         <input
                             onChange={e => setAmount(e.target.value)}
                             placeholder="0.00"
+                            autoFocus
+                            disabled={isLoading}
                         />
                     </div>
 
@@ -30,11 +32,13 @@ const MintCoin = ({
                         <BaseButton
                             text="Cancel"
                             onClick={() => setMintModal(!mintModal)}
+                            isLoading={isLoading}
                         />
                         {
                             isLoading
                                 ? <BaseButton
                                     text={<Spinner />}
+                                    isLoading={isLoading}
                                 />
                                 : <BaseButton
                                     text="Send"

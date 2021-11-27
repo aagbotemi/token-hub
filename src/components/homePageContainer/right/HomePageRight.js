@@ -232,7 +232,7 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
                 setMintModal(!mintModal)
                 // console.log(`${amount} coins has successfully been minted`);
                 toast.dismiss();
-                toast.error(`${amount} coins has successfully been minted`, {
+                toast.success(`${amount} coins has successfully been minted`, {
                     position: "top-right",
                     pauseOnHover: true,
                     draggable: false,
@@ -294,7 +294,7 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
             <div className={'top-info d-none d-lg-flex justify-between items-center main-container-right-sub-content'}>
                 <div>1 {symbol} = $234</div>
                 <div>
-                    Total Value: {balanceOf / (10 ** 18)}
+                    Total Value: {(balanceOf / (10 ** 18)).toFixed(2)}
                 </div>
                 <BaseButton
                     className={'tnx-history-btn cursor-pointer'}
@@ -306,7 +306,7 @@ const HomePageRight = ({ tokenAddress, requestWallet }) => {
                 <div className={'top-info d-flex d-lg-none justify-between items-center main-container-right-sub-content flex-wrap'}>
                     <div>1 {symbol} = $234</div>
                     <div>
-                      Total Value: {balanceOf / (10 ** 18)}
+                      Total Value: {Number(balanceOf / (10**18)).toFixed(2)}
                     </div>
                     <BaseButton
                         className={'tnx-history-btn cursor-pointer'}

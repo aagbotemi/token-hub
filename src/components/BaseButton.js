@@ -1,7 +1,7 @@
 import React from 'react'
 
-const BaseButton = ({ onClick, text, className }) => {
-    return <button className={className}
+const BaseButton = ({ onClick, text, className, isLoading }) => {
+    return <button disabled={isLoading} className={className}
     onClick={onClick}>{text}</button>
 }
 

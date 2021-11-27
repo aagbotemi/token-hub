@@ -14,7 +14,7 @@ const ConfiscateCoin = ({
         <div className={'modal'}>
             <div>
                 <h3 style={{ color: '#41415a'}}>
-                    Confiscate <span>AAToken</span> from an account
+                    Confiscate <span>AAToken</span> from an account <br /> <span style={{fontSize: '12px'}}>Kindly append  18 0's to the amount you want to confiscate, we are using 18 decimals.</span>
                 </h3>
 
                 <form>
@@ -23,6 +23,8 @@ const ConfiscateCoin = ({
                         <input
                             onChange={e => setOwnerAccount(e.target.value)}
                             placeholder="0x000000000000000000000000"
+                            autoFocus
+                            disabled={isLoading}
                         />
                     </div>
                     <div className={'mt-1'}>
@@ -30,6 +32,7 @@ const ConfiscateCoin = ({
                         <input
                             onChange={e => setAmount(e.target.value)}
                             placeholder="0.00"
+                            disabled={isLoading}
                         />
                     </div>
 
@@ -37,11 +40,13 @@ const ConfiscateCoin = ({
                         <BaseButton
                             text="Cancel"
                             onClick={() => setConfiscateModal(!confiscateModal)}
+                            isLoading={isLoading}
                         />
                         {
                             isLoading
                                 ? <BaseButton
                                     text={<Spinner />}
+                                    isLoading={isLoading}
                                 />
                                 : <BaseButton
                                     text="Confiscate"

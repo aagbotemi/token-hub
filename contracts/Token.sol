@@ -1,9 +1,8 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "hardhat/console.sol";
-
-/* My ethereum token */
 
 contract SafeMath {
     function safeAdd(uint a, uint b) public pure returns (uint c) {
@@ -88,9 +87,9 @@ contract Token is ERC20Token, Owned, SafeMath {
     constructor () {
         _symbol = "AAT";
         _name = "Abiodun Awoyemi Token";
-        _decimal = 0;
+        _decimal = 18;
         _totalSupply = 1000000 * (10 ** 18);
-        _minter = 0x7A3E0DFf9B53fA0d3d1997903A48677399b22ce7;
+        _minter = msg.sender;
 
         balances[_minter] = _totalSupply;
         emit Transfer(address(0), _minter, _totalSupply);

@@ -10,8 +10,7 @@ import NotFound from './pages/404/404'
 import { toast } from 'react-toastify';
 
 // const tokenAddress = "0x437c9558aC57D07BDa7050cf03379DfeA150C7aE";
-const tokenAddress = "0xE6aC6F8179dFc95939BFD35AC6b945F678331E79";
-
+const tokenAddress = "0x0C8d5CA2eF6Dd3Ec15AA302b423973f31cd9bdd4";
 
 function App() {
   const [currentAccount, setCurrentAccount] = useState("");
